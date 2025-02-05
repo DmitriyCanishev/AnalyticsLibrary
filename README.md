@@ -65,3 +65,4 @@ AnalyticsLogg.e("$message")
 AnalyticsLogger.Logger.e("$message", "$message")
 ```
 
+TODO Edit README

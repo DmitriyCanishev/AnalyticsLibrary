@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.app.analytics"
+    namespace = "com.app.analytics.sdk.appsflyer"
     compileSdk = 34
 
     defaultConfig {
@@ -32,5 +32,6 @@ android {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.21")
+    implementation("com.appsflyer:af-android-sdk:6.12.1")
+    compileOnly(project(":analytics"))
 }
