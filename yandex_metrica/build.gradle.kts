@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.app.analytics"
+    namespace = "com.app.analytics.sdk.appmetrica"
     compileSdk = 34
 
     defaultConfig {
@@ -33,5 +33,6 @@ android {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.21")
+    implementation("io.appmetrica.analytics:analytics:7.6.0")
+    compileOnly(project(":analytics"))
 }

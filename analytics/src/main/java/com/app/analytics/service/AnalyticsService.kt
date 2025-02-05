@@ -1,44 +1,49 @@
 package com.app.analytics.service
 
-import android.content.Context
 import com.app.analytics.common.AnalyticsLogger
+import com.app.analytics.datatypes.AnalyticsSDKDefinition
 import com.app.analytics.model.AnalyticsEvent
 
-class AnalyticsService : IAnalyticsService
+class AnalyticsService
 {
-    private val _services : MutableList<IAnalyticsService> = mutableListOf()
+    private val _tag = AnalyticsService::class.simpleName + "Tag"
 
-    override fun init(context: Context) {
-        _services.forEach {
-            AnalyticsLogger.Logger.e(
-                "Init",
-                "Initing ${it.javaClass}")
-            it.init(context)
-        }
-    }
+    private val _allServices : MutableMap<AnalyticsSDKDefinition, IAnalyticsService> = mutableMapOf()
 
-    override fun logEvent(event: AnalyticsEvent) {
-        _services.forEach {
-            it.logEvent(event)
-        }
-    }
-
-    fun addService(service: IAnalyticsService){
-        require(service !is AnalyticsService) { "Can't add AnalyticsService instance because it container for services" }
-        if (!service.serviceExistInList())
-            _services.add(service)
-    }
-
-    private fun IAnalyticsService.serviceExistInList() : Boolean {
-        val checkedServiceClass = this::class.java
-        _services.forEach { service ->
-            if (checkedServiceClass == service::class.java)
-            {
-                AnalyticsLogger.Logger.d("$checkedServiceClass equals ${service::class.java} in list")
-                return true
+    fun init(analyticsList: List<IAnalyticsService>?) {
+        try
+        {
+            analyticsList?.forEach { analyticService ->
+                AnalyticsLogger.Logger.e(
+                    "Init ${analyticService.javaClass}"
+                )
+                addService(analyticService)
             }
+        } catch (e: Exception) {
+            AnalyticsLogger.Logger.d("$_tag: ", "Init failed with Error: $e")
         }
-        return false
+    }
+
+    fun logEvent(event: AnalyticsEvent) {
+        try
+        {
+            _allServices.forEach {
+                it.value.logEvent(event)
+            }
+        } catch (e: Exception){
+            AnalyticsLogger.Logger.e("$_tag: ", "Error during send event : $e")
+        }
+    }
+
+    private fun addService(service: IAnalyticsService){
+        try {
+            if (!_allServices.containsKey(service.getAnalyticsDefinition())) {
+                AnalyticsLogger.Logger.e("$_tag: ", "Init Service : ${service.javaClass.simpleName}")
+                _allServices[service.getAnalyticsDefinition()] = service
+            }
+        } catch (e : Exception) {
+            AnalyticsLogger.Logger.e("$_tag: ", "Add Service - $service failed with error : $e")
+        }
     }
 }
 

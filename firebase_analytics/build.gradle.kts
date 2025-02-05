@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.app.analytics"
+    namespace = "com.app.analytics.sdk.firebase"
     compileSdk = 34
 
     defaultConfig {
@@ -33,5 +33,8 @@ android {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.21")
+    implementation(platform("com.google.firebase:firebase-bom:33.8.0"))
+    implementation("com.google.firebase:firebase-analytics")
+
+    compileOnly(project(":analytics"))
 }
