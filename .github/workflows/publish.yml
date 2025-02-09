@@ -15,7 +15,7 @@ on:
       - '*'
 
 jobs:
-  publish:
+  build-dev:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,13 +29,45 @@ jobs:
       - name: Make Gradle Wrapper Executable
         run: chmod +x ./gradlew
 
+      - name: Build the Library
+        run: |
+          BUILD_TYPE=${{ github.event.inputs.buildType }}
+          BUILD_COMMAND="./gradlew clean assemble${BUILD_TYPE}"
+
+          echo "Building with command: $BUILD_COMMAND"
+          $BUILD_COMMAND
+
+      - name: Upload AAR and POM artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          path: build/outputs/aar/*.aar
+
+  publish-dev:
+    needs: build-dev
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download AAR and POM artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
       - name: Publish to GitHub Packages
         env:
           PACKAGE_UPLOAD_USER: ${{ github.actor }}
           PACKAGE_UPLOAD_PASSWORD: ${{ secrets.PACKAGE_TOKEN }}
         run: |
-          BUILD_TYPE=${{ github.event.inputs.buildType }}
-          BUILD_COMMAND="./gradlew assemble${BUILD_TYPE} publish"
+          # Create directory for library
+          mkdir -p artifacts/debug
 
-          echo "Building with command: $BUILD_COMMAND"
-          $BUILD_COMMAND
+          # Move AAR and POM into the directory
+          mv artifacts/*.aar artifacts/debug/
+          mv artifacts/*.pom artifacts/debug/
+
+          # Publish artifact
+          ./gradlew publish
+
+          # Move artifacts back from the publish
+          ./gradlew clean
