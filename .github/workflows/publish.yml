@@ -1,8 +1,6 @@
 name: Publish Android Library to GitHub Packages
 
-on:
-  release:
-    types: [published]
+on: [push]
 
 jobs:
   publish:
