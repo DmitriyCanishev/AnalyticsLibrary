@@ -87,10 +87,10 @@ publishing {
             version = libraryVersion
             artifact(
                 "${
-                    File(
-                        buildDir.absolutePath,
-                        "outputs/aar"
-                    )
+                        File(
+                            rootDir.absolutePath,
+                            "artifacts/debug"
+                        )
                 }/${project.name}-debug.aar"
             )
 
