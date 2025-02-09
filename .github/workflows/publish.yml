@@ -1,9 +1,6 @@
 name: Build and Publish Android Library
 
 on:
-  push:
-    branches:
-      - '*'
   workflow_dispatch:
     inputs:
       buildType:
@@ -13,6 +10,9 @@ on:
         options:
           - Debug
           - Release
+  push:
+    branches:
+      - '*'
 
 jobs:
   publish:
