@@ -1,6 +1,15 @@
 name: Publish Android Library to GitHub Packages
 
-on: [push]
+on:
+  workflow_dispatch:
+      inputs:
+        buildType:
+          description: 'Build Type'
+          required: true
+          type: choice
+          options:
+            - Debug
+            - Release
 
 jobs:
   publish:
@@ -20,4 +29,9 @@ jobs:
         env:
           PACKAGE_UPLOAD_USER: ${{ github.actor }}
           PACKAGE_UPLOAD_PASSWORD: ${{ secrets.PACKAGE_TOKEN }}
-        run: ./gradlew publish
+        run: |
+          BUILD_TYPE=${{ github.event.inputs.buildType }}
+          BUILD_COMMAND="./gradlew assemble${BUILD_TYPE} publish"
+
+          echo "Building with command: $BUILD_COMMAND"
+          $BUILD_COMMAND

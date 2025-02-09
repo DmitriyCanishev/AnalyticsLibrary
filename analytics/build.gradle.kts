@@ -47,6 +47,27 @@ configurations.api.configure {
 dependencies {
     api("org.jetbrains.kotlin:kotlin-stdlib:2.0.21")
 }
+
+tasks.register("copyAARDebug") {
+    doLast {
+        copy {
+            from(File(buildDir.absolutePath, "outputs/aar"))
+            include("${project.name}-debug.aar")
+            into(File(rootDir.absolutePath, "artifacts/debug"))
+        }
+    }
+}
+
+tasks.register("copyAARRelease") {
+    doLast {
+        copy {
+            from(File(buildDir.absolutePath, "outputs/aar"))
+            include("${project.name}-release.aar")
+            into(File(rootDir.absolutePath, "artifacts/release"))
+        }
+    }
+}
+
 publishing {
     repositories {
         maven {
