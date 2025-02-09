@@ -1,25 +1,41 @@
-name: Publish Android Library to GitHub Packages
+name: Build and Publish Android Library
 
 on:
-  release:
-    types: [published]
+  workflow_dispatch:
+    inputs:
+      buildType:
+        description: 'Build Type (Debug or Release)'
+        required: true
+        type: choice
+        options:
+          - Debug
+          - Release
+  push:
+    branches:
+      - '*'
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
-      - name: Set up JDK 11
+      - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          java-version: '11'
+          java-version: '17'
           distribution: 'temurin'
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+      - name: Make Gradle Wrapper Executable
+        run: chmod +x ./gradlew
 
       - name: Publish to GitHub Packages
         env:
           PACKAGE_UPLOAD_USER: ${{ github.actor }}
-          PACKAGE_UPLOAD_PASSWORD: ${{ secrets.PACKAGE_TOKEN }
-        run: ./gradlew publishReleasePublicationToGitHubPackagesRepository
+          PACKAGE_UPLOAD_PASSWORD: ${{ secrets.PACKAGE_TOKEN }}
+        run: |
+          BUILD_TYPE=${{ github.event.inputs.buildType }}
+          BUILD_COMMAND="./gradlew assemble${BUILD_TYPE} publish"
+
+          echo "Building with command: $BUILD_COMMAND"
+          $BUILD_COMMAND
