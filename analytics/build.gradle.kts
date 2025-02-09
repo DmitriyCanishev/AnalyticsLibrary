@@ -70,7 +70,7 @@ publishing {
                         buildDir.absolutePath,
                         "outputs/aar"
                     )
-                }/${project.name}-release.aar"
+                }/${project.name}-debug.aar"
             )
 
             pom {
