@@ -10,10 +10,10 @@ on:
         options:
           - Debug
           - Release
-
   push:
     branches:
-      - '*'
+      - add_analytics_sdk_upload
+      - master
 
 jobs:
   publish:
