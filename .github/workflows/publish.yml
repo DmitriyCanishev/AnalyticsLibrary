@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: read
+      packages: write
 
     steps:
       - uses: actions/checkout@v3
@@ -44,33 +44,32 @@ jobs:
         run: |
           ./gradlew :analytics:copyAARDebug
 
-      - name: Upload AAR Artifacts
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: aar-artifacts
-          path: |
-            analytics/build/outputs/aar/*.aar
+          path: artifacts/
 
   publish-dev:
     needs: build-dev
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: read
+      packages: write
 
     steps:
+      - name: Download AAR and POM artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: aar-artifacts
+          path: artifacts
+
       - uses: actions/checkout@v3
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
-
-      - name: Download AAR and POM artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: aar-artifacts
-          path: artifacts
 
       - name: Make Gradle Wrapper Executable
         run: chmod +x ./gradlew
@@ -80,7 +79,6 @@ jobs:
           PACKAGE_UPLOAD_USER: ${{ github.actor }}
           PACKAGE_UPLOAD_PASSWORD: ${{ secrets.PACKAGE_TOKEN }}
         run: |
-          BUILD_TYPE=${{ github.event.inputs.buildType }}
           BUILD_COMMAND="./gradlew publish"
 
           echo "Building with command: $BUILD_COMMAND"
