@@ -1,4 +1,4 @@
-name: Build Android Library
+name: Build and Publish Android Library
 
 on:
   workflow_dispatch:
@@ -12,8 +12,7 @@ on:
           - Release
   push:
     branches:
-      - add_analytics_sdk_upload
-      - master
+      - '*'
 
 jobs:
   publish:
