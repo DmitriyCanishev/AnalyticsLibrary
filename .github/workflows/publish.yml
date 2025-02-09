@@ -17,6 +17,9 @@ on:
 jobs:
   build-dev:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
 
     steps:
       - uses: actions/checkout@v3
@@ -36,20 +39,24 @@ jobs:
 
           echo "Building with command: $BUILD_COMMAND"
           $BUILD_COMMAND
-          ./gradlew 
 
-      - name: Upload AAR and POM artifacts
+      - name: Copy AAR and POM artifacts
         run: |
           ./gradlew :analytics:copyAARDebug
 
-      - name: Upload APK Artifact
+      - name: Upload AAR Artifacts
         uses: actions/upload-artifact@v4
         with:
-          path: /home/runner/work/AnalyticsLibrary/AnalyticsLibrary/artifacts/debug/**/*.aar
+          name: aar-artifacts
+          path: |
+            analytics/build/outputs/aar/*.aar
 
   publish-dev:
     needs: build-dev
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
 
     steps:
       - uses: actions/checkout@v3
@@ -62,6 +69,7 @@ jobs:
       - name: Download AAR and POM artifacts
         uses: actions/download-artifact@v4
         with:
+          name: aar-artifacts
           path: artifacts
 
       - name: Make Gradle Wrapper Executable
