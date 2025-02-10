@@ -58,12 +58,6 @@ jobs:
       packages: write
 
     steps:
-      - name: Download AAR and POM artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: aar-artifacts
-          path: artifacts/
-
       - uses: actions/checkout@v3
       - name: Set up JDK 17
         uses: actions/setup-java@v3
@@ -73,6 +67,28 @@ jobs:
 
       - name: Make Gradle Wrapper Executable
         run: chmod +x ./gradlew
+
+      - name: Build the Library
+        run: |
+          BUILD_TYPE=${{ github.event.inputs.buildType }}
+          BUILD_COMMAND="./gradlew assemble${BUILD_TYPE}"
+          
+          echo "Building with command: $BUILD_COMMAND"
+          $BUILD_COMMAND
+
+      - name: Download AAR and POM artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: aar-artifacts
+          path: artifacts/
+
+      - name: Display AAR Debug  - structure of downloaded files
+        run: ls -R
+        working-directory: artifacts/
+
+      - name: Display AAR structure into Debug
+        run: ls -R
+        working-directory: artifacts/${{ github.event.inputs.build_type }}
 
       - name: Publish to GitHub Packages
         env:
