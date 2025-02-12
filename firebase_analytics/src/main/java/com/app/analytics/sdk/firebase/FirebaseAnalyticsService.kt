@@ -1,10 +1,10 @@
 package com.app.analytics.sdk.firebase
 
 import android.app.Activity
-import com.app.analytics.common.AnalyticsLogger
-import com.app.analytics.datatypes.AnalyticsSDKDefinition
-import com.app.analytics.model.AnalyticsEvent
-import com.app.analytics.utils.toAnalyticsBundleParams
+import com.analytics.common.AnalyticsLogger
+import com.analytics.datatypes.AnalyticsSDKDefinition
+import com.analytics.model.AnalyticsEvent
+import com.analytics.utils.toAnalyticsBundleParams
 import com.google.firebase.analytics.FirebaseAnalytics
 
 class FirebaseAnalyticsService : IFirebaseAnalyticsService {

@@ -1,8 +1,8 @@
-package com.app.analytics.service
+package com.analytics.service
 
-import com.app.analytics.common.AnalyticsLogger
-import com.app.analytics.datatypes.AnalyticsSDKDefinition
-import com.app.analytics.model.AnalyticsEvent
+import com.analytics.common.AnalyticsLogger
+import com.analytics.datatypes.AnalyticsSDKDefinition
+import com.analytics.model.AnalyticsEvent
 
 class AnalyticsService
 {

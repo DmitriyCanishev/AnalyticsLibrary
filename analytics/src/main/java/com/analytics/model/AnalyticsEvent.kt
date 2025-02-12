@@ -1,4 +1,4 @@
-package com.app.analytics.model
+package com.analytics.model
 
 open class AnalyticsEvent(
     val eventName: String = "EventName",

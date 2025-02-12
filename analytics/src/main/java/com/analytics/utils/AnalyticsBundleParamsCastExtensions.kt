@@ -1,4 +1,4 @@
-package com.app.analytics.utils
+package com.analytics.utils
 
 import android.os.Bundle
 

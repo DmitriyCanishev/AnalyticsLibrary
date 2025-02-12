@@ -8,12 +8,12 @@ plugins {
 
 var repositoryReleaseUrl: URI = URI.create("https://maven.pkg.github.com/DmitriyCanishev/AnalyticsLibrary")
 
-var libraryGroupId = "com.app.analytics"
+var libraryGroupId = "com.analytics"
 var libraryArtifact = "base"
 var libraryVersion = "0.0.1.1"
 
 android {
-    namespace = "com.app.analytics"
+    namespace = "com.analytics"
     compileSdk = 34
 
     defaultConfig {

@@ -1,4 +1,4 @@
-package com.app.analytics.logevents
+package com.analytics.logevents
 
 import android.util.Log
 

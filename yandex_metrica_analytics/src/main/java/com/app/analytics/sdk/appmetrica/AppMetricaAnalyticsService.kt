@@ -1,10 +1,10 @@
 package com.app.analytics.sdk.appmetrica
 
 import android.app.Activity
-import com.app.analytics.common.AnalyticsLogger
-import com.app.analytics.datatypes.AnalyticsSDKDefinition
-import com.app.analytics.model.AnalyticsEvent
-import com.app.analytics.service.IAnalyticsService
+import com.analytics.common.AnalyticsLogger
+import com.analytics.datatypes.AnalyticsSDKDefinition
+import com.analytics.model.AnalyticsEvent
+import com.analytics.service.IAnalyticsService
 import io.appmetrica.analytics.AppMetrica
 import io.appmetrica.analytics.AppMetricaConfig
 

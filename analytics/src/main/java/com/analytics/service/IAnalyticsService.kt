@@ -1,8 +1,8 @@
-package com.app.analytics.service
+package com.analytics.service
 
 import android.app.Activity
-import com.app.analytics.datatypes.AnalyticsSDKDefinition
-import com.app.analytics.model.AnalyticsEvent
+import com.analytics.datatypes.AnalyticsSDKDefinition
+import com.analytics.model.AnalyticsEvent
 
 interface IAnalyticsService
 {

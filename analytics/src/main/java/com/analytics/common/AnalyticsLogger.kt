@@ -1,6 +1,6 @@
-package com.app.analytics.common
+package com.analytics.common
 
-import com.app.analytics.logevents.ModuleLogger
+import com.analytics.logevents.ModuleLogger
 
 object AnalyticsLogger {
     private var _moduleLogger : ModuleLogger? = null

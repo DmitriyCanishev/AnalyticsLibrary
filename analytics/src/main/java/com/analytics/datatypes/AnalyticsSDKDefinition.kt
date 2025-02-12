@@ -1,4 +1,4 @@
-package com.app.analytics.datatypes
+package com.analytics.datatypes
 
 enum class AnalyticsSDKDefinition {
     AppMetrica,
