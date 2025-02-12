@@ -1,4 +1,4 @@
-package com.app.analytics.sdk.firebase
+package com.analytics.sdk.firebase
 
 import android.app.Activity
 import com.analytics.common.AnalyticsLogger

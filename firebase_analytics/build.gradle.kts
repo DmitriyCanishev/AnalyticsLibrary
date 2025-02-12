@@ -8,12 +8,12 @@ plugins {
 
 var repositoryReleaseUrl: URI = URI.create("https://maven.pkg.github.com/DmitriyCanishev/AnalyticsLibrary")
 
-var libraryGroupId = "com.app.analytics"
+var libraryGroupId = "com.analytics"
 var libraryArtifact = "firebase-sdk"
 var libraryVersion = "0.0.1"
 
 android {
-    namespace = "com.app.analytics.sdk.firebase"
+    namespace = "com.analytics.sdk.firebase"
     compileSdk = 34
 
     defaultConfig {
