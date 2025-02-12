@@ -90,9 +90,9 @@ publishing {
                 "${
                     File(
                         rootDir.absolutePath,
-                        "artifacts/debug"
+                        "artifacts/release"
                     )
-                }/${project.name}-debug.aar"
+                }/${project.name}-release.aar"
             )
 
             pom {
