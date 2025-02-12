@@ -33,6 +33,10 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build the Library
+        env:
+          STORE_PASS: ${{ secrets.STORE_PASS }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASS: ${{ secrets.KEY_PASS }}
         run: |
           BUILD_TYPE=${{ github.event.inputs.buildType }}
           BUILD_COMMAND="./gradlew clean assemble${BUILD_TYPE}"
