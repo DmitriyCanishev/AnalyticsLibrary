@@ -48,7 +48,7 @@ implementation("com.analytics:appmetrica-sdk:+")
 
 * Create analytics sdk instances
 ```kotlin
-val concreteAnalytics = IAnalyticsSericeImpl().also {
+val concreteAnalytics = IAnalyticsServiceImpl().also {
     it.init(
         activity,
         "apiKey" // It has a default value, so if the adapter doesn't need this identifier(like Firebase), just fill the first parameter.
