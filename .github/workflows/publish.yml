@@ -1,10 +1,7 @@
 name: Publish Release Android Library
 
 on:
-  workflow_run:
-    workflows: ["Build Release Android Library"]
-    types:
-      - completed
+  workflow_dispatch:
 
 jobs:
   upload:
