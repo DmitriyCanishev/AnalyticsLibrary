@@ -9,18 +9,17 @@ plugins {
 var repositoryReleaseUrl: URI = URI.create("https://maven.pkg.github.com/DmitriyCanishev/AnalyticsLibrary")
 
 var libraryGroupId = "com.app.analytics"
-var libraryArtifact = "firebase-sdk"
+var libraryArtifact = "appmetrica-sdk"
 var libraryVersion = "0.0.1"
 
 android {
-    namespace = "com.app.analytics.sdk.firebase"
+    namespace = "com.app.analytics.sdk.appmetrica"
     compileSdk = 34
 
     defaultConfig {
         minSdk = 28
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -46,9 +45,7 @@ configurations.api.configure {
 }
 
 dependencies {
-    api(platform("com.google.firebase:firebase-bom:33.9.0"))
-    api("com.google.firebase:firebase-analytics")
-
+    api("io.appmetrica.analytics:analytics:7.6.0")
     compileOnly(project(":analytics"))
 }
 
