@@ -11,7 +11,12 @@ on:
           - Debug
           - Release
       upload_job:
-        description: 'Run Upload'
+        description: 'Run Upload All'
+        required: true
+        default: true
+        type: boolean
+      custom_upload_job:
+        description: 'Run Custom Upload'
         required: true
         default: false
         type: boolean
@@ -61,6 +66,7 @@ jobs:
 
   upload:
     runs-on: ubuntu-latest
+    needs: build
     if: ${{ inputs.upload_job == 'true' && inputs.build_type == 'Release' }}
     permissions:
       contents: read
@@ -99,7 +105,8 @@ jobs:
 
   concrete_upload:
     runs-on: ubuntu-latest
-    if: ${{ inputs.upload_job == 'true' && inputs.build_type == 'Release' }}
+    needs: build
+    if: ${{ inputs.custom_upload_job == 'true' && inputs.build_type == 'Release' }}
     permissions:
       contents: read
       packages: read
