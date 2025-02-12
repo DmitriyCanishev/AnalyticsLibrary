@@ -5,48 +5,69 @@
 To make it easier for you to add the Analytics SDK to your project,
 I've created an analytics library that can manage the SDKs and send events to them.
 
-## How use
+## Integration
 
-* First step:
-    - Create concrete analytics service into lib 'service' folder
-    - Create concrete analytics service as lib, that will use the analytics lib as dependency to implement the IAnalyticsService interface(preferred option)
-
-* Just choose one of it suggestions.
-
-* Second step:
-    - Add Concrete Analytics SDK dependencies for it work correctly into project
-
-* Third step:
-    - Implement analytics lib into project
-```kotlin
- implementation(project(":analytics"))
+* Add 'Analytics' repository URL
+```gradle
+allprojects {
+    repositories {
+        maven {
+          url "https://maven.pkg.github.com/DmitriyCanishev/AnalyticsLibrary"
+          credentials {
+              username = "GITHUB_USERNAME"
+              password = "GITHUB_TOKEN"
+          }
+	    }
+    }
+}
 ```
 
-* Fourth step:
-    - Create AnalyticsService instance into your project
+* Add 'Analytics' dependency for Android or Unity projects
+```gradle
+implementation ("com.analytics:base:+")
+```
+
+* Add dependency for analytics sdk what you will need in projects, but first of all you need add Analytics dependency
+```gradle
+implementation("com.analytics:appsflyer-sdk:+")
+implementation("com.analytics:firebase-sdk:+")
+implementation("com.analytics:appmetrica-sdk:+")
+```
+
+## Settings Analytics Service before use
+
+* Declare variable of AnalyticsService
 ```kotlin
- private lateinit var _analyticsService: IAnalyticsService
+ private lateinit var _analyticsService: AnalyticsService
+```
+
+* Create instance of AnalyticsService
+```kotlin
  _analyticsService = AnalyticsService()
 ```
 
-## Add Concrete Analytics services into analytics lib
+* Create analytics sdk instances
+```kotlin
+val concreteAnalytics = IAnalyticsSericeImpl().also {
+    it.init(
+        activity,
+        "apiKey" // It has a default value, so if the adapter doesn't need this identifier(like Firebase), just fill the first parameter.
+    )
+}
+```
 
 * Add Concrete Analytics SDK into a list to AnalyticsService for their managing
 ```kotlin
- _analyticsService.addService() // Pass as a parameter instance of concrete Analytic service
-```
-
-## Init services
-
-```kotlin
- _analyticsService.init(context)
+ _analyticsService.init(listOf()) // Here, Example: listOf(appMetricaAnalytics, firebaseAnalytics)
 ```
 
 ## Sending events
 
 * For sending events to Analytics SDK
 ```kotlin
- _analyticsService.logEvent() // As parameter, use the model class 'AnalyticsEvent' which is suitable for most Analytics SDK
+ _analyticsService.logEvent(
+    AnalyticsEvent(eventName = "FirstCustomEvent")
+ ) // As parameter, use the model class 'AnalyticsEvent' which is suitable for most Analytics SDK
 ```
 
 ## Debugging
@@ -65,4 +86,8 @@ AnalyticsLogg.e("$message")
 AnalyticsLogger.Logger.e("$message", "$message")
 ```
 
-TODO Edit README
+## Versions of mediators ##
+
+* AppsFlyer : com.appsflyer:af-android-sdk:6.12.1
+* Firebase : com.google.firebase:firebase-analytics:22.2.0
+* AppMetrica : io.appmetrica.analytics:analytics:7.6.0

@@ -10,12 +10,12 @@ on:
         options:
           - Debug
           - Release
-      upload_job:
+      uploadJob:
         description: 'Run Upload All'
         required: true
-        default: true
+        default: false
         type: boolean
-      custom_upload_job:
+      customUploadJob:
         description: 'Run Custom Upload'
         required: true
         default: false
@@ -67,7 +67,7 @@ jobs:
   upload:
     runs-on: ubuntu-latest
     needs: build
-    if: ${{ inputs.upload_job == 'true' }}
+    if: ${{ github.event.inputs.uploadJob == 'true' && github.event.inputs.buildType == 'Release' }}
     permissions:
       contents: read
       packages: read
@@ -89,7 +89,7 @@ jobs:
           name: aar-artifacts
           path: artifacts/
 
-      - name: Display AAR Debug  - structure of downloaded files
+      - name: Display AAR - structure of downloaded files
         run: ls -R
         working-directory: artifacts/
 
@@ -97,16 +97,12 @@ jobs:
         env:
           PACKAGE_UPLOAD_USER: ${{ github.actor }}
           PACKAGE_UPLOAD_PASSWORD: ${{ secrets.PACKAGE_TOKEN }}
-        run: |
-          BUILD_COMMAND="./gradlew publish"
-
-          echo "Building with command: $BUILD_COMMAND"
-          $BUILD_COMMAND
+        run: ./gradlew publish"
 
   concrete_upload:
     runs-on: ubuntu-latest
     needs: build
-    if: ${{ github.event.inputs.custom_upload_job == true }}
+    if: ${{ github.event.inputs.customUploadJob == true && && github.event.inputs.buildType == 'Release' }}
     permissions:
       contents: read
       packages: read
@@ -128,7 +124,7 @@ jobs:
           name: aar-artifacts
           path: artifacts/
 
-      - name: Display AAR Debug  - structure of downloaded files
+      - name: Display AAR  - structure of downloaded files
         run: ls -R
         working-directory: artifacts/
 
