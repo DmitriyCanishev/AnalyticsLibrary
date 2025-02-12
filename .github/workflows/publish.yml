@@ -1,4 +1,4 @@
-name: Publish Android Library
+name: Publish Release Android Library
 
 on:
   workflow_run:
