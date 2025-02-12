@@ -1,4 +1,4 @@
-name: Publish Android Library
+name: Publish Concrete Android Library
 
 on:
   workflow_run:
@@ -30,7 +30,7 @@ jobs:
           name: aar-artifacts
           path: artifacts/
 
-      - name: Display AAR  - structure of downloaded files
+      - name: Display AAR - structure of downloaded files
         run: ls -R
         working-directory: artifacts/
 
@@ -39,7 +39,7 @@ jobs:
           PACKAGE_UPLOAD_USER: ${{ github.actor }}
           PACKAGE_UPLOAD_PASSWORD: ${{ secrets.PACKAGE_TOKEN }}
         run: |
-          BUILD_COMMAND="./gradlew publish"
+          BUILD_COMMAND="./gradlew :analytics:publish"
 
           echo "Building with command: $BUILD_COMMAND"
           $BUILD_COMMAND
