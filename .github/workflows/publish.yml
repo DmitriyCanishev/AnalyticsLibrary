@@ -44,14 +44,14 @@ jobs:
           echo "Building with command: $BUILD_COMMAND"
           $BUILD_COMMAND
 
-      - name: Copy AAR and POM ${{ github.event.inputs.build_type }} artifacts
+      - name: Copy AAR and POM artifacts
         run: |
-          ./gradlew :analytics:copyAAR${{ github.event.inputs.build_type }}
-          ./gradlew :appsflyer_analytics:copyAAR${{ github.event.inputs.build_type }}
-          ./gradlew :firebase_analytics:copyAAR${{ github.event.inputs.build_type }}
-          ./gradlew :yandex_metrica_analytics:copyAAR${{ github.event.inputs.build_type }}
+          ./gradlew :analytics:copyAARDebug
+          ./gradlew :appsflyer_analytics:copyAARDebug
+          ./gradlew :firebase_analytics:copyAARDebug
+          ./gradlew :yandex_metrica_analytics:copyAARDebug
 
-      - name: Upload ${{ github.event.inputs.build_type }} Artifacts
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: aar-artifacts
