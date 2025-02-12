@@ -1,4 +1,4 @@
-package com.app.analytics.sdk.appmetrica
+package com.analytics.sdk.appmetrica
 
 import android.app.Activity
 import com.analytics.common.AnalyticsLogger
