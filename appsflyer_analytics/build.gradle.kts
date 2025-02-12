@@ -8,12 +8,12 @@ plugins {
 
 var repositoryReleaseUrl: URI = URI.create("https://maven.pkg.github.com/DmitriyCanishev/AnalyticsLibrary")
 
-var libraryGroupId = "com.app.analytics"
+var libraryGroupId = "com.analytics"
 var libraryArtifact = "appsflyer-sdk"
 var libraryVersion = "0.0.1"
 
 android {
-    namespace = "com.app.analytics.sdk.appsflyer"
+    namespace = "com.analytics.sdk.appsflyer"
     compileSdk = 34
 
     defaultConfig {

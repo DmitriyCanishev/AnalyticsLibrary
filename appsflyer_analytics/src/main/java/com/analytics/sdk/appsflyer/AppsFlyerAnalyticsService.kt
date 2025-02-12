@@ -1,4 +1,4 @@
-package com.app.analytics.sdk.appsflyer
+package com.analytics.sdk.appsflyer
 
 import android.app.Activity
 import android.content.Context
