@@ -67,7 +67,8 @@ jobs:
   upload:
     runs-on: ubuntu-latest
     needs: build
-    if: ${{ inputs.upload_job == 'true' && inputs.build_type == 'Release' }}
+    if: ${{ github.event.inputs.upload_job == 'true' 
+      && github.event.inputs.build_type == 'Release' }}
     permissions:
       contents: read
       packages: read
@@ -106,7 +107,8 @@ jobs:
   concrete_upload:
     runs-on: ubuntu-latest
     needs: build
-    if: ${{ inputs.custom_upload_job == 'true' && inputs.build_type == 'Release' }}
+    if: ${{ github.event.inputs.custom_upload_job == true
+      && github.event.inputs.build_type == 'Release' }}
     permissions:
       contents: read
       packages: read
