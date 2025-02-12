@@ -16,3 +16,6 @@ dependencyResolutionManagement {
 rootProject.name = "AnalyticsModule"
 include(":app")
 include(":analytics")
+include(":yandex_metrica_analytics")
+include(":firebase_analytics")
+include(":appsflyer_analytics")

@@ -9,17 +9,18 @@ plugins {
 var repositoryReleaseUrl: URI = URI.create("https://maven.pkg.github.com/DmitriyCanishev/AnalyticsLibrary")
 
 var libraryGroupId = "com.analytics"
-var libraryArtifact = "base"
-var libraryVersion = "0.0.1.1"
+var libraryArtifact = "firebase-sdk"
+var libraryVersion = "0.0.1"
 
 android {
-    namespace = "com.analytics"
+    namespace = "com.analytics.sdk.firebase"
     compileSdk = 34
 
     defaultConfig {
         minSdk = 28
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -45,7 +46,10 @@ configurations.api.configure {
 }
 
 dependencies {
-    api("org.jetbrains.kotlin:kotlin-stdlib:2.0.21")
+    api(platform("com.google.firebase:firebase-bom:33.9.0"))
+    api("com.google.firebase:firebase-analytics")
+
+    compileOnly(project(":analytics"))
 }
 
 tasks.register("copyAARDebug") {
@@ -87,10 +91,10 @@ publishing {
             version = libraryVersion
             artifact(
                 "${
-                        File(
-                            rootDir.absolutePath,
-                            "artifacts/debug"
-                        )
+                    File(
+                        rootDir.absolutePath,
+                        "artifacts/debug"
+                    )
                 }/${project.name}-debug.aar"
             )
 

@@ -9,11 +9,11 @@ plugins {
 var repositoryReleaseUrl: URI = URI.create("https://maven.pkg.github.com/DmitriyCanishev/AnalyticsLibrary")
 
 var libraryGroupId = "com.analytics"
-var libraryArtifact = "base"
-var libraryVersion = "0.0.1.1"
+var libraryArtifact = "appmetrica-sdk"
+var libraryVersion = "0.0.1"
 
 android {
-    namespace = "com.analytics"
+    namespace = "com.analytics.sdk.appmetrica"
     compileSdk = 34
 
     defaultConfig {
@@ -45,7 +45,8 @@ configurations.api.configure {
 }
 
 dependencies {
-    api("org.jetbrains.kotlin:kotlin-stdlib:2.0.21")
+    api("io.appmetrica.analytics:analytics:7.6.0")
+    compileOnly(project(":analytics"))
 }
 
 tasks.register("copyAARDebug") {
@@ -87,10 +88,10 @@ publishing {
             version = libraryVersion
             artifact(
                 "${
-                        File(
-                            rootDir.absolutePath,
-                            "artifacts/debug"
-                        )
+                    File(
+                        rootDir.absolutePath,
+                        "artifacts/debug"
+                    )
                 }/${project.name}-debug.aar"
             )
 
