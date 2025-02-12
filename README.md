@@ -86,7 +86,7 @@ AnalyticsLogg.e("$message")
 AnalyticsLogger.Logger.e("$message", "$message")
 ```
 
-## Versions of mediators ##
+## Versions of analytics sdk ##
 
 * AppsFlyer : com.appsflyer:af-android-sdk:6.12.1
 * Firebase : com.google.firebase:firebase-analytics:22.2.0
