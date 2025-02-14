@@ -13,10 +13,8 @@ class AnalyticsService
     fun init(analyticsList: List<IAnalyticsService>?) {
         try
         {
+            AnalyticsLogger.Logger.e("Init AnalyticsService")
             analyticsList?.forEach { analyticService ->
-                AnalyticsLogger.Logger.e(
-                    "Init ${analyticService.javaClass}"
-                )
                 addService(analyticService)
             }
         } catch (e: Exception) {
