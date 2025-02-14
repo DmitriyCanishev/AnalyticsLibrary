@@ -12,13 +12,19 @@ class AppMetricaAnalyticsService : IAnalyticsService {
     private val _tag = AppMetricaAnalyticsService::class.simpleName+ "Tag"
 
     override fun init(activity: Activity, apiKey: String) {
-        AppMetrica
-            .activate(
-                activity.applicationContext, AppMetricaConfig
-                    .newConfigBuilder(apiKey)
-                    .build()
-            )
-        AppMetrica.enableActivityAutoTracking(activity.application)
+        AnalyticsLogger.Logger.e("Fake Init $_tag")
+//        try
+//        {
+//            AppMetrica
+//                .activate(
+//                    activity.applicationContext, AppMetricaConfig
+//                        .newConfigBuilder(apiKey)
+//                        .build()
+//                )
+//            AppMetrica.enableActivityAutoTracking(activity.application)
+//        } catch (_: Exception){
+//            AnalyticsLogger.Logger.e("Init $_tag failed")
+//        }
     }
 
     override fun logEvent(event: AnalyticsEvent) {
@@ -30,14 +36,14 @@ class AppMetricaAnalyticsService : IAnalyticsService {
                 "Event : ${event.eventName} - ${event.params} in ${this.javaClass}"
         )
 
-        when (event.params) {
-            null -> {
-                AppMetrica.reportEvent(event.eventName)
-            }
-            else -> {
-                AppMetrica.reportEvent(event.eventName, event.params)
-            }
-        }
+//        when (event.params) {
+//            null -> {
+//                AppMetrica.reportEvent(event.eventName)
+//            }
+//            else -> {
+//                AppMetrica.reportEvent(event.eventName, event.params)
+//            }
+//        }
     }
 
     override fun getAnalyticsDefinition(): AnalyticsSDKDefinition =

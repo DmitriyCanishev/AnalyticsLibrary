@@ -10,7 +10,7 @@ var repositoryReleaseUrl: URI = URI.create("https://maven.pkg.github.com/Dmitriy
 
 var libraryGroupId = "com.analytics"
 var libraryArtifact = "appmetrica-sdk"
-var libraryVersion = "0.0.1"
+var libraryVersion = "0.0.1.1"
 
 android {
     namespace = "com.analytics.sdk.appmetrica"
