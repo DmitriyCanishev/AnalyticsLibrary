@@ -8,7 +8,7 @@ class AnalyticsService
 {
     private val _tag = AnalyticsService::class.simpleName + "Tag"
 
-    private val _allServices : MutableMap<AnalyticsSDKDefinition, IAnalyticsService> = mutableMapOf()
+    private val _allServices : MutableMap<AnalyticsSDKDefinition, IAnalyticsService?> = mutableMapOf()
 
     fun init(analyticsList: List<IAnalyticsService>?) {
         try
@@ -28,7 +28,7 @@ class AnalyticsService
         try
         {
             _allServices.forEach {
-                it.value.logEvent(event)
+                it.value?.logEvent(event)
             }
         } catch (e: Exception){
             AnalyticsLogger.Logger.e("$_tag: ", "Error during send event : $e")

@@ -66,7 +66,9 @@ val concreteAnalytics = IAnalyticsServiceImpl().also {
 * For sending events to Analytics SDK
 ```kotlin
  _analyticsService.logEvent(
-    AnalyticsEvent(eventName = "FirstCustomEvent")
+    AnalyticsEvent(
+        eventName = "FirstCustomEvent", 
+        params = mapOf("EventParam" to "EventParamValue")) //params:Map<String, Any>? can be null
  ) // As parameter, use the model class 'AnalyticsEvent' which is suitable for most Analytics SDK
 ```
 
@@ -82,7 +84,7 @@ AnalyticsLogger.Logger.d("$message", "$message")
 
 * Error variants
 ```kotlin
-AnalyticsLogg.e("$message")
+AnalyticsLogger.e("$message")
 AnalyticsLogger.Logger.e("$message", "$message")
 ```
 
