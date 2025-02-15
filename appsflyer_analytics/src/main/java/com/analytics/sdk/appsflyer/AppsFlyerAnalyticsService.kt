@@ -18,8 +18,13 @@ class AppsFlyerAnalyticsService : IAnalyticsService {
     override fun init(activity: Activity, apiKey: String) {
         _context = activity.applicationContext
 
-        AppsFlyerLib.getInstance().init(apiKey, null, _context)
-        AppsFlyerLib.getInstance().start(_context);
+        try
+        {
+            AppsFlyerLib.getInstance().init(apiKey, null, _context)
+            AppsFlyerLib.getInstance().start(_context)
+        } catch (e: Exception){
+            AnalyticsLogger.Logger.e("Init $_tag failed with error $e")
+        }
     }
 
     override fun logEvent(event: AnalyticsEvent) {
@@ -30,22 +35,27 @@ class AppsFlyerAnalyticsService : IAnalyticsService {
             else
                 "Event : ${event.eventName} - ${event.params} in ${this.javaClass}"
         )
-        AppsFlyerLib.getInstance()
-            .logEvent(
-                _context,
-                event.eventName,
-                event.params,
-                object : AppsFlyerRequestListener {
-                    override fun onSuccess() {
-                        AnalyticsLogger.Logger.e("Event send successfully")
-                    }
+        try
+        {
+            AppsFlyerLib.getInstance()
+                .logEvent(
+                    _context,
+                    event.eventName,
+                    event.params,
+                    object : AppsFlyerRequestListener {
+                        override fun onSuccess() {
+                            AnalyticsLogger.Logger.e("Event send successfully")
+                        }
 
-                    override fun onError(p0: Int, p1: String) {
-                        AnalyticsLogger.Logger.e(
-                            "Event failed to be sent:\nError code: $p0\nError description: $p1"
-                        )
-                    }
-                })
+                        override fun onError(p0: Int, p1: String) {
+                            AnalyticsLogger.Logger.e(
+                                "Event failed to be sent:\nError code: $p0\nError description: $p1"
+                            )
+                        }
+                    })
+        } catch (e: Exception){
+            AnalyticsLogger.Logger.e("Failed to send event with error $e")
+        }
     }
 
     override fun getAnalyticsDefinition(): AnalyticsSDKDefinition =

@@ -8,12 +8,16 @@ import com.analytics.utils.toAnalyticsBundleParams
 import com.google.firebase.analytics.FirebaseAnalytics
 
 class FirebaseAnalyticsService : IFirebaseAnalyticsService {
-    private val _tag = FirebaseAnalyticsService::class.simpleName+ "Tag"
+    private val _tag = FirebaseAnalyticsService::class.simpleName + "Tag"
     private lateinit var _analyticsTracker: FirebaseAnalytics
 
     override fun init(activity: Activity) {
-        _analyticsTracker = FirebaseAnalytics.getInstance(activity.applicationContext)
-        _analyticsTracker.setAnalyticsCollectionEnabled(true)
+        try {
+            _analyticsTracker = FirebaseAnalytics.getInstance(activity.applicationContext)
+            _analyticsTracker.setAnalyticsCollectionEnabled(true)
+        } catch (e: Exception) {
+            AnalyticsLogger.Logger.e("Init $_tag failed with error $e")
+        }
     }
 
     override fun init(activity: Activity, apiKey: String): Unit =
@@ -27,7 +31,14 @@ class FirebaseAnalyticsService : IFirebaseAnalyticsService {
             else
                 "Event : ${event.eventName} - ${event.params} in ${this.javaClass}"
         )
-        _analyticsTracker.logEvent(event.eventName, event.params?.toAnalyticsBundleParams())
+        try {
+            _analyticsTracker.logEvent(
+                event.eventName,
+                event.params?.toAnalyticsBundleParams()
+            )
+        } catch (e: Exception) {
+            AnalyticsLogger.Logger.e("Failed to send event with error $e")
+        }
     }
 
     override fun getAnalyticsDefinition(): AnalyticsSDKDefinition =

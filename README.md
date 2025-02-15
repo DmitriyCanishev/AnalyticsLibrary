@@ -34,6 +34,12 @@ implementation("com.analytics:firebase-sdk:+")
 implementation("com.analytics:appmetrica-sdk:+")
 ```
 
+## Major Notes
+
+For using Firebase Analytics you need to add **google-services.json** to project folder:
+- For Android: app/
+- For Unity: Assets/
+
 ## Settings Analytics Service before use
 
 * Declare variable of AnalyticsService
