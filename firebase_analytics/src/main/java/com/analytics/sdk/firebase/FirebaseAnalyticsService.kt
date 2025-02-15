@@ -25,7 +25,7 @@ class FirebaseAnalyticsService : IFirebaseAnalyticsService {
 
     override fun logEvent(event: AnalyticsEvent) {
         AnalyticsLogger.Logger.e(
-            "Log In $_tag",
+            "Log In $_tag ",
             if (event.params == null)
                 "Event : ${event.eventName} in ${this.javaClass}"
             else
