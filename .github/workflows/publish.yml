@@ -97,7 +97,7 @@ jobs:
         env:
           PACKAGE_UPLOAD_USER: ${{ github.actor }}
           PACKAGE_UPLOAD_PASSWORD: ${{ secrets.PACKAGE_TOKEN }}
-        run: ./gradlew publish"
+        run: ./gradlew publish
 
   concrete_upload:
     runs-on: ubuntu-latest
