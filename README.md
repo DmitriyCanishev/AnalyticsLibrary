@@ -45,6 +45,7 @@ For using Firebase Analytics in Unity use Unity 2021 LTS or Later.
 Other Analytics services work fine and on Unity 2020.
 
 For Unity writes a separate class for manage analytics sdk services : `UnityAnalyticsService`
+
 Example project in Unity to demonstrate using library into Unity([See](https://github.com/DmitriyCanishev/UseAnalyticsLibraryInUnity))
 
 ## Settings Analytics Service before use
