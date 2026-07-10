@@ -1,6 +1,6 @@
 package com.analytics.model
 
-open class AnalyticsEvent(
+data class AnalyticsEvent(
     val eventName: String = "EventName",
     val params: Map<String, Any>? = null
 ) {

@@ -6,10 +6,10 @@ object AnalyticsLogger {
     private var _moduleLogger : ModuleLogger? = null
 
     val Logger: ModuleLogger
-        get() {
-            if (_moduleLogger == null)
-                _moduleLogger = ModuleLogger()
-
-            return _moduleLogger!!
-        }
+        get() =
+            _moduleLogger ?:
+            synchronized(this) {
+                _moduleLogger ?:
+                ModuleLogger().also { _moduleLogger = it }
+            }
 }

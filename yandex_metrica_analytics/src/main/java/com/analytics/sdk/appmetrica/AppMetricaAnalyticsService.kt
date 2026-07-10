@@ -1,6 +1,8 @@
 package com.analytics.sdk.appmetrica
 
 import android.app.Activity
+import android.content.Context
+import com.analytics.callback.ServiceCallback
 import com.analytics.common.AnalyticsLogger
 import com.analytics.datatypes.AnalyticsSDKDefinition
 import com.analytics.model.AnalyticsEvent
@@ -11,7 +13,7 @@ import io.appmetrica.analytics.AppMetricaConfig
 class AppMetricaAnalyticsService : IAnalyticsService {
     private val _tag = AppMetricaAnalyticsService::class.simpleName+ "Tag"
 
-    override fun init(activity: Activity, apiKey: String) {
+    override fun init(activity: Activity, apiKey: String, callback: ServiceCallback?) {
         try
         {
             AppMetrica
@@ -21,12 +23,14 @@ class AppMetricaAnalyticsService : IAnalyticsService {
                         .build()
                 )
             AppMetrica.enableActivityAutoTracking(activity.application)
+            callback?.success()
         } catch (e: Exception){
             AnalyticsLogger.Logger.e("Init $_tag failed with error $e")
+            callback?.error("Init $_tag error $e")
         }
     }
 
-    override fun logEvent(event: AnalyticsEvent) {
+    override fun logEvent(context: Context, event: AnalyticsEvent) {
         AnalyticsLogger.Logger.e(
             "Log In $_tag ",
             if (event.params == null)
@@ -46,7 +50,7 @@ class AppMetricaAnalyticsService : IAnalyticsService {
                 }
             }
         } catch (e: Exception){
-            AnalyticsLogger.Logger.e("Failed to send event with error $e")
+            throw Exception("Failed to send event with error $e")
         }
     }
 
