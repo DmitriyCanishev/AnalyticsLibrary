@@ -2,6 +2,7 @@ package com.analytics.sdk.appsflyer
 
 import android.app.Activity
 import android.content.Context
+import com.analytics.callback.ServiceCallback
 import com.analytics.common.AnalyticsLogger
 import com.analytics.datatypes.AnalyticsSDKDefinition
 import com.analytics.model.AnalyticsEvent
@@ -9,25 +10,24 @@ import com.analytics.service.IAnalyticsService
 import com.appsflyer.AppsFlyerLib
 import com.appsflyer.attribution.AppsFlyerRequestListener
 
-
 class AppsFlyerAnalyticsService : IAnalyticsService {
     private val _tag = AppsFlyerAnalyticsService::class.simpleName + "Tag"
 
-    private lateinit var _context: Context
-
-    override fun init(activity: Activity, apiKey: String) {
-        _context = activity.applicationContext
+    override fun init(activity: Activity, apiKey: String, callback: ServiceCallback?) {
+        val context = activity.applicationContext
 
         try
         {
-            AppsFlyerLib.getInstance().init(apiKey, null, _context)
-            AppsFlyerLib.getInstance().start(_context)
+            AppsFlyerLib.getInstance().init(apiKey, null, context)
+            AppsFlyerLib.getInstance().start(context)
+            callback?.success()
         } catch (e: Exception){
             AnalyticsLogger.Logger.e("Init $_tag failed with error $e")
+            callback?.error("Init $_tag error $e")
         }
     }
 
-    override fun logEvent(event: AnalyticsEvent) {
+    override fun logEvent(context: Context, event: AnalyticsEvent) {
         AnalyticsLogger.Logger.e(
             "Log In $_tag ",
             if (event.params == null)
@@ -39,7 +39,7 @@ class AppsFlyerAnalyticsService : IAnalyticsService {
         {
             AppsFlyerLib.getInstance()
                 .logEvent(
-                    _context,
+                    context,
                     event.eventName,
                     event.params,
                     object : AppsFlyerRequestListener {
@@ -54,7 +54,7 @@ class AppsFlyerAnalyticsService : IAnalyticsService {
                         }
                     })
         } catch (e: Exception){
-            AnalyticsLogger.Logger.e("Failed to send event with error $e")
+            throw Exception("Failed to send event with error $e")
         }
     }
 

@@ -65,7 +65,16 @@ Example project in Unity to demonstrate using library into Unity([See](https://g
 val concreteAnalytics = IAnalyticsServiceImpl().also {
     it.init(
         activity,
-        "apiKey" // It has a default value, so if the adapter doesn't need this identifier(like Firebase), just fill the first parameter.
+        "apiKey", // It has a default value, so if the adapter doesn't need this identifier(like Firebase), just skip this param.
+        object : ServiceCallback { // This param has a default value, so you can skip it if you don't need it
+            override fun success() {
+                AnalyticsLogger.Logger.e("ConcreteAnalytics:", "Init Success")
+            }
+
+            override fun error(message: String?) {
+                AnalyticsLogger.Logger.e("ConcreteAnalytics:", "Init failed: $message")
+            }
+        }
     )
 }
 ```
@@ -80,9 +89,19 @@ val concreteAnalytics = IAnalyticsServiceImpl().also {
 * For sending events to Analytics SDK
 ```kotlin
  _analyticsService.logEvent(
+    context,
     AnalyticsEvent(
         eventName = "FirstCustomEvent", 
-        params = mapOf("EventParam" to "EventParamValue")) //params:Map<String, Any>? can be null
+        params = mapOf("EventParam" to "EventParamValue")), //params:Map<String, Any>? can be null
+    object : ServiceCallback { // This param has a default value, so you can skip it if you don't need it
+        override fun success() {
+            AnalyticsLogger.Logger.e("Event:", "Send Success")
+        }
+
+        override fun error(message: String?) {
+            AnalyticsLogger.Logger.e("Event:", "Send failed: $message")
+        }
+    }
  ) // As parameter, use the model class 'AnalyticsEvent' which is suitable for most Analytics SDK
 ```
 
