@@ -1,5 +1,6 @@
 package com.analytics.service.unity
 
+import android.content.Context
 import com.analytics.model.AnalyticsEvent
 import com.analytics.service.AnalyticsService
 import com.analytics.service.IAnalyticsService
@@ -16,6 +17,6 @@ class UnityAnalyticsService {
         _analyticsList?.add(analyticsService)
     }
 
-    fun logEvent(eventName: String, eventParams: Map<String, Any>? = null) =
-        _analyticsService.logEvent(AnalyticsEvent(eventName, eventParams))
+    fun logEvent(context: Context, eventName: String, eventParams: Map<String, Any>? = null) =
+        _analyticsService.logEvent(context, AnalyticsEvent(eventName, eventParams))
 }
