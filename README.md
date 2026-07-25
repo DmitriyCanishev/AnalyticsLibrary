@@ -105,6 +105,43 @@ val concreteAnalytics = IAnalyticsServiceImpl().also {
  ) // As parameter, use the model class 'AnalyticsEvent' which is suitable for most Analytics SDK
 ```
 
+## Plugin
+For simplify adding 'AnalyticsService' into projects try this way
+This plugin will create a ready-made class for using analytics and add all need dependencies
+
+1) Add into _**pluginManagement -> repositories**_ section in project settings gradle next maven:
+
+```
+maven("https://maven.pkg.github.com/DmitriyCanishev/AnalyticsLibrary") {
+    credentials {
+          username = "GITHUB_USERNAME"
+          password = "GITHUB_TOKEN"
+    }
+}
+```
+
+2) Add plugin into _**plugins { }**_ section in project build gradle :
+
+```
+id("com.analytics.plugin") version "0.0.1" apply false
+```
+
+3) Add plugin into app build gradle :
+
+```
+id("com.service.sdk.plugin")
+```
+
+4) Follow instructions into **Build** window (Briefly, into **android** section use 'analytics' block for specifying adapters what you need)
+* Most analytics has next params: **apiKey**, except Firebase, but if you specify an apiKey for it, system will be ignore it anyway
+```
+    analytics {
+        yandex {}
+        firebase {}
+        appsflyer {}
+    }
+```
+
 ## Debugging
 
 * Use a custom Logger to sort Logs by tag - "AnalyticsService"
