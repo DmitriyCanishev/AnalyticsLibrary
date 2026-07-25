@@ -7,7 +7,7 @@ class DependencyInstaller(private val target: Project) {
     fun install(analytics: List<AnalyticsDescriptor>) {
         target.logger.lifecycle("---Installing AnalyticsSDK dependencies---")
 
-        addDependency("com.analytics:base:0.0.2")
+        addDependency("com.analytics:base:0.0.3")
         analytics.forEach { analytic ->
             addDependency(analytic.artifact)
         }

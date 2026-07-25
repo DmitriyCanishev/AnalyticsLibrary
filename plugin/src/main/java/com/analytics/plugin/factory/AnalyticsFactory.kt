@@ -1,6 +1,7 @@
 package com.analytics.plugin.factory
 
 import com.analytics.plugin.extension.AnalyticsExtension
+import com.analytics.plugin.extension.info.AnalyticsName
 import com.analytics.plugin.model.AnalyticsDescriptor
 import com.analytics.plugin.model.AnalyticsParameter
 import com.analytics.plugin.model.utils.AnalyticsDescriptorBuilder
@@ -12,16 +13,25 @@ class AnalyticsFactory(private val extension: AnalyticsExtension) {
         val analytics = mutableListOf<AnalyticsDescriptor>()
 
         for (analytic in extension.analytics) {
-            analytics.add(AnalyticsDescriptorBuilder().build(
-                artifact = "com.analytics:${analytic.key.analyticsName.value.lowercase()}-sdk:${analytic.key.analyticsVersion}",
-                className = "${analytic.key.analyticsName}AnalyticsService",
-                parameters = listOf(
-                    AnalyticsParameter(
-                        name = _apiKey,
-                        value = analytic.value.apiKey
+            analytics.add(
+                if (analytic.key.analyticsName == AnalyticsName.Firebase) {
+                    AnalyticsDescriptorBuilder().build(
+                        artifact = "com.analytics:${analytic.key.analyticsName.value.lowercase()}-sdk:${analytic.key.analyticsVersion}",
+                        className = "${analytic.key.analyticsName.value}AnalyticsService"
                     )
-                )
-            ))
+                } else {
+                    AnalyticsDescriptorBuilder().build(
+                        artifact = "com.analytics:${analytic.key.analyticsName.value.lowercase()}-sdk:${analytic.key.analyticsVersion}",
+                        className = "${analytic.key.analyticsName.value}AnalyticsService",
+                        parameters = listOf(
+                            AnalyticsParameter(
+                                name = _apiKey,
+                                value = analytic.value.apiKey
+                            )
+                        )
+                    )
+                }
+            )
         }
 
         return analytics

@@ -24,7 +24,7 @@ class AnalyticsServiceGenerator {
                         analytics.variableName.replace(
                             "AnalyticsService",
                             ""
-                        )
+                        ).lowercase()
                     }.${analytics.className}"
                 )
             }
@@ -53,22 +53,24 @@ class AnalyticsServiceGenerator {
                 "                activity = activity,"
             )
 
-            analytic.parameters.forEachIndexed { index, parameter ->
-                val comma =
-                    if (index == analytic.parameters.lastIndex) ""
-                    else ","
-
+            analytic.parameters?.forEachIndexed { _, parameter ->
                 appendLine(
-                    "                ${parameter.name} = \"${parameter.value}\"$comma"
+                    "                ${parameter.name} = \"${parameter.value}\","
                 )
             }
 
-            appendLine(
-                "            )"
-            )
-
+            appendLine("                callback = object : ServiceCallback {")
+            appendLine("                    override fun success() {")
+            appendLine("                        AnalyticsLogger.Logger.e(\"ConcreteAnalytics:\", \"Init Success\")")
+            appendLine("                    }")
+            appendLine()
+            appendLine("                    override fun error(message: String?) {")
+            appendLine("                        AnalyticsLogger.Logger.e(\"ConcreteAnalytics:\", \"Init failed: \$message \")")
+            appendLine("                    }")
+            appendLine("                }")
+            appendLine("            )")
             append(
-                "        }\n"
+                "        }"
             )
         }
     }

@@ -6,9 +6,7 @@ import com.analytics.service.AnalyticsService
 import com.analytics.callback.ServiceCallback
 import com.analytics.model.AnalyticsEvent
 import com.analytics.common.AnalyticsLogger
-
 %IMPORT%
-
 class AnalyticsServiceHandler {
     private lateinit var _analyticsService: AnalyticsService
 
@@ -62,61 +60,11 @@ class AnalyticsServiceHandler {
     }
 
     private fun createAnalyticsSdk(activity: Activity) {
-//        val yandexMetricaAnalytics = AppMetricaAnalyticsService().also {
-//            it.init(
-//                activity = activity,
-//                apiKey = TODO(),
-//                callback = object :
-//                    ServiceCallback {
-//                    override fun success() {
-//                        AnalyticsLogger.Logger.e("ConcreteAnalytics:", "Init Success")
-//                    }
-//
-//                    override fun error(message: String?) {
-//                        AnalyticsLogger.Logger.e("ConcreteAnalytics:", "Init failed: $message")
-//                    }
-//                }
-//            )
-//        }
-//
-//        val firebaseSdkAnalytics = FirebaseAnalyticsService().also {
-//            it.init(
-//                activity = activity,
-//                callback = object :
-//                    ServiceCallback {
-//                    override fun success() {
-//                        AnalyticsLogger.Logger.e("ConcreteAnalytics:", "Init Success")
-//                    }
-//
-//                    override fun error(message: String?) {
-//                        AnalyticsLogger.Logger.e("ConcreteAnalytics:", "Init failed: $message")
-//                    }
-//                }
-//            )
-//        }
-//
-//        val appsflyerAnalytics = AppsFlyerAnalyticsService().also {
-//            it.init(
-//                activity = activity,
-//                apiKey = TODO(),
-//                callback = object :
-//                    ServiceCallback {
-//                    override fun success() {
-//                        AnalyticsLogger.Logger.e("ConcreteAnalytics:", "Init Success")
-//                    }
-//
-//                    override fun error(message: String?) {
-//                        AnalyticsLogger.Logger.e("ConcreteAnalytics:", "Init failed: $message")
-//                    }
-//                }
-//            )
-//        }
-
 %ANALYTIC_DECLARATION%
-                _analyticsService.init(
-                    listOf(
-                        %ANALYTIC_LIST%
-                )
+        _analyticsService.init(
+            listOf(
+                %ANALYTIC_LIST%
+            )
         )
     }
 }

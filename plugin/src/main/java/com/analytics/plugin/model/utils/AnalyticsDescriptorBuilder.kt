@@ -7,7 +7,7 @@ class AnalyticsDescriptorBuilder {
     fun build(
         artifact: String,
         className: String,
-        parameters: List<AnalyticsParameter>
+        parameters: List<AnalyticsParameter>? = null
     ): AnalyticsDescriptor {
 
         val variableName = buildVariableName(className)
