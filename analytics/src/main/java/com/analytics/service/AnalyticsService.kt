@@ -1,6 +1,5 @@
 package com.analytics.service
 
-import android.app.Activity
 import android.content.Context
 import com.analytics.callback.ServiceCallback
 import com.analytics.common.AnalyticsLogger

@@ -19,3 +19,25 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-repackageclasses com.analytics
+
+-keep class com.analytics.service.AnalyticsService {
+    *;
+}
+
+-keep interface com.analytics.service.IAnalyticsService {
+    *;
+}
+
+-keep class com.analytics.service.unity.UnityAnalyticsService {
+    *;
+}
+
+-keep interface com.analytics.callback.ServiceCallback {
+    *;
+}
+
+-keep class com.analytics.model.AnalyticsEvent {
+    *;
+}

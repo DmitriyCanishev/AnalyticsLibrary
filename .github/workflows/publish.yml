@@ -132,4 +132,6 @@ jobs:
         env:
           PACKAGE_UPLOAD_USER: ${{ github.actor }}
           PACKAGE_UPLOAD_PASSWORD: ${{ secrets.PACKAGE_TOKEN }}
-        run: ./gradlew :plugin:publish
+        run:
+          ./gradlew :plugin:publish
+          ./gradlew :analytics:publish

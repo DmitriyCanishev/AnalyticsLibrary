@@ -5,7 +5,7 @@ import android.content.Context
 import com.analytics.service.AnalyticsService
 import com.analytics.callback.ServiceCallback
 import com.analytics.model.AnalyticsEvent
-import com.analytics.common.AnalyticsLogger
+import android.util.Log
 %IMPORT%
 class AnalyticsServiceHandler {
     private lateinit var _analyticsService: AnalyticsService
@@ -21,11 +21,11 @@ class AnalyticsServiceHandler {
             event = AnalyticsEvent(eventName = eventName),
             callback = object : ServiceCallback {
                 override fun success() {
-                    AnalyticsLogger.Logger.e("Event:", "Send Success")
+                    Log.e("Event:", "Send Success")
                 }
 
                 override fun error(message: String?) {
-                    AnalyticsLogger.Logger.e("Event:", "Send failed: $message")
+                    Log.e("Event:", "Send failed: $message")
                 }
             }
         )
@@ -45,11 +45,11 @@ class AnalyticsServiceHandler {
             ),
             callback = object : ServiceCallback {
                 override fun success() {
-                    AnalyticsLogger.Logger.e("Event:", "Send Success")
+                    Log.e("Event:", "Send Success")
                 }
 
                 override fun error(message: String?) {
-                    AnalyticsLogger.Logger.e("Event:", "Send failed: $message")
+                    Log.e("Event:", "Send failed: $message")
                 }
             }
         )
